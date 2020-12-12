@@ -9,10 +9,11 @@ from tkinter import *
 import shutil
 import tinify
 from settings import *
+import threading
 
 
 class MainWindow:
-    
+
     THIS_FOLDER_G = ""
     if getattr(sys, "frozen", False):
         THIS_FOLDER_G = os.path.dirname(sys.executable)
@@ -48,7 +49,6 @@ class MainWindow:
             )
         except Exception:
             pass
-
 
         self.menu_bar = tk.Menu(
             root,
@@ -120,7 +120,6 @@ class MainWindow:
             sticky=tk.W+tk.E+tk.N+tk.S
         )
 
-        
         self.file_entry_label2 = tk.Label(
             root,
             text="Enter Output Folder Path:",
@@ -231,7 +230,7 @@ class MainWindow:
             columnspan=4,
             sticky=tk.W+tk.E+tk.N+tk.S
         )
-        
+
         self.reset_btn = tk.Button(
             root,
             text="CLEAR",
@@ -302,36 +301,43 @@ NOTE: Directory Structure in INPUT and OUTPUT Folders may differ but all Support
         )
 
     def compress_callback(self):
+        t1 = threading.Thread(target=self.compress_execute)
+        t1.start()
+
+    def compress_execute(self):
         try:
-            tinify.key=self._api_key.get()
+            tinify.key = self._api_key.get()
             tinify.validate()
 
-            if not create_dirs(self._folder_url1.get(),self._folder_url2.get()):
-            	return 
+            if not create_dirs(self._folder_url1.get(), self._folder_url2.get()):
+                return
 
             self._status.set("Compression in Progress....")
             self.status_label.update()
 
-            
             self.raw_images = get_raw_images(self._folder_url1.get())
             for image in self.raw_images:
-                change_dir(image,self._folder_url1.get(),self._folder_url2.get())
+                change_dir(image, self._folder_url1.get(),
+                           self._folder_url2.get())
                 compress_and_save(image)
             self._status.set("Compression Completed !!")
             self.status_label.update()
 
         except tinify.AccountError:
-            messagebox.showinfo("AccountError","Please verify your Tinify API key and account limit...")
+            messagebox.showinfo(
+                "AccountError", "Please verify your Tinify API key and account limit...")
         except tinify.ClientError:
-            messagebox.showinfo("ClientError","Please check your source images...")
+            messagebox.showinfo(
+                "ClientError", "Please check your source images...")
         except tinify.ServerError:
-            messagebox.showinfo("ServerError","""Temporary issue with the Tinify API. 
+            messagebox.showinfo("ServerError", """Temporary issue with the Tinify API. 
             	Please try again later...""")
         except tinify.ConnectionError:
-            messagebox.showinfo("ConnectionError","""A network connection error occurred. 
+            messagebox.showinfo("ConnectionError", """A network connection error occurred. 
             	Please check your Internet Connection and Try again...""")
         except Exception as e:
-            messagebox.showinfo("UnknownError","Something went wrong. Please try again later...")
+            messagebox.showinfo(
+                "UnknownError", "Something went wrong. Please try again later...")
 
     def reset_callback(self):
         self._folder_url1.set("")
