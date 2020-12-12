@@ -1,5 +1,6 @@
 import os
 import os.path
+from os import path
 import sys
 import tkinter as tk
 from tkinter import filedialog
@@ -275,6 +276,12 @@ class MainWindow:
         try:
             name = filedialog.askdirectory()
             self._folder_url1.set(name)
+            if path.exists(self._folder_url1.get()):
+            	pass
+            else:
+            	messagebox.showinfo("Directory Error !","""Input Folder Doesn't Exist. 
+            		Check the Path and Try Again.""")
+            	reset_callback 
         except Exception as e:
             self._status.set(e)
             self.status_label.update()
@@ -283,6 +290,12 @@ class MainWindow:
         try:
             name = filedialog.askdirectory()
             self._folder_url2.set(name)
+            if path.exists(self._folder_url2.get()):
+            	pass
+            else:
+            	messagebox.showinfo("Directory Error !","""Output Folder Doesn't Exist. 
+            		Check the Path and Try Again.""")
+            	reset_callback 
         except Exception as e:
             self._status.set(e)
             self.status_label.update()
@@ -304,10 +317,14 @@ NOTE: Directory Structure in INPUT and OUTPUT Folders may differ but all Support
         try:
             tinify.key=self._api_key.get()
             tinify.validate()
+
+            if not create_dirs(self._folder_url1.get(),self._folder_url2.get()):
+            	return 
+
             self._status.set("Compression in Progress....")
             self.status_label.update()
 
-            create_dirs(self._folder_url1.get(),self._folder_url2.get())
+            
             self.raw_images = get_raw_images(self._folder_url1.get())
             for image in self.raw_images:
                 change_dir(image,self._folder_url1.get(),self._folder_url2.get())
@@ -316,25 +333,21 @@ NOTE: Directory Structure in INPUT and OUTPUT Folders may differ but all Support
             self.status_label.update()
 
         except tinify.AccountError:
-            self._status.set("AccountError: \nPlease verify your Tinify API key and account limit...")
-            self.status_label.update()
+            messagebox.showinfo("AccountError","Please verify your Tinify API key and account limit...")
         except tinify.ClientError:
-            self._status.set("ClientError: \nPlease check your source images...")
-            self.status_label.update()
+            messagebox.showinfo("ClientError","Please check your source images...")
         except tinify.ServerError:
-            self._status.set("ServerError: \nTemporary issue with the Tinify API. Please try again later...")
-            self.status_label.update()
+            messagebox.showinfo("ServerError","""Temporary issue with the Tinify API. 
+            	Please try again later...""")
         except tinify.ConnectionError:
-            self._status.set("ConnectionError: \nA network connection error occurred. Please check your Internet Connection and Try again...")
-            self.status_label.update()
+            messagebox.showinfo("ConnectionError","""A network connection error occurred. 
+            	Please check your Internet Connection and Try again...""")
         except Exception as e:
-            self._status.set("UnknownError: \nSomething went wrong. Please try again later...")
-            self.status_label.update()
+            messagebox.showinfo("UnknownError","Something went wrong. Please try again later...")
 
     def reset_callback(self):
         self._folder_url1.set("")
         self._folder_url2.set("")
-        self._api_key.set("")
         self._status.set("---")
 
 

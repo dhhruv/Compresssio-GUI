@@ -1,4 +1,6 @@
 import os
+import os.path
+from tkinter import messagebox
 import shutil
 import sys
 import tinify
@@ -8,7 +10,9 @@ SUPPORTED_FORMATS = ('jpg', 'jpeg', 'png')
 def create_dirs(raw_images_dir,save_dir):
 
     if not os.path.isdir(raw_images_dir):
-        os.makedirs(raw_images_dir)
+        messagebox.showinfo("Directory Error !",""" Input Folder Does not Exist.
+        Please Check the Directory and Try Again""")
+        return False
 
     custom_dirs = []
     for root, directories, files in os.walk(raw_images_dir):
@@ -20,6 +24,8 @@ def create_dirs(raw_images_dir,save_dir):
     for dir_ in compress_dirs:
         if not os.path.isdir(dir_):
             os.makedirs(dir_)
+
+    return True
 
 def get_raw_images(raw_images_dir):
 
