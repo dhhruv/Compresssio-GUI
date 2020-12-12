@@ -276,12 +276,6 @@ class MainWindow:
         try:
             name = filedialog.askdirectory()
             self._folder_url1.set(name)
-            if path.exists(self._folder_url1.get()):
-            	pass
-            else:
-            	messagebox.showinfo("Directory Error !","""Input Folder Doesn't Exist. 
-            		Check the Path and Try Again.""")
-            	reset_callback 
         except Exception as e:
             self._status.set(e)
             self.status_label.update()
@@ -290,12 +284,6 @@ class MainWindow:
         try:
             name = filedialog.askdirectory()
             self._folder_url2.set(name)
-            if path.exists(self._folder_url2.get()):
-            	pass
-            else:
-            	messagebox.showinfo("Directory Error !","""Output Folder Doesn't Exist. 
-            		Check the Path and Try Again.""")
-            	reset_callback 
         except Exception as e:
             self._status.set(e)
             self.status_label.update()
