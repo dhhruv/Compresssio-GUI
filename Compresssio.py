@@ -1,6 +1,5 @@
 import os
 import os.path
-from os import path
 import sys
 import tkinter as tk
 from tkinter import filedialog
@@ -322,6 +321,7 @@ NOTE: Directory Structure in INPUT and OUTPUT Folders may differ but all Support
                 compress_and_save(image)
             self._status.set("Compression Completed !!")
             self.status_label.update()
+            messagebox.showinfo("Compresssio","Compression Completed !!")
 
         except tinify.AccountError:
             messagebox.showinfo(
