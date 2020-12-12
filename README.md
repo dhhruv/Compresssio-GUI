@@ -43,13 +43,13 @@ pip install -r requirements.txt
 
 ## How to Get Your API Key !
 
-You can Find your API Key from the Website [tinypng.com/dashboard/api](https://tinypng.com/dashboard/api) after Signing Up and save it somewhere on your PC/Laptop.
+You can Find your API Key from the Website [tinypng.com/dashboard/api](https://tinypng.com/developers) after Signing Up and save it somewhere on your PC/Laptop.
 
 
 ## How To Use !
 1.	Click SELECT INPUT FOLDER Button to select the INPUT FOLDER which contains all the Images to be Compressed/Optimized.
 2.	Click SELECT OUTPUT FOLDER Button to select the OUTPUT FOLDER which will contain all the the Compressed/Optimized Images. (After Compression)
-3.	Enter Your API Key from TINYPNG Website. If you don't have one in possession then you can find on this website https://tinypng.com/developers/
+3.	Enter Your API Key from TINYPNG Website. If you don't have one in possession then you can find on this website https://tinypng.com/developers .
 4.	Hit the COMPRESS Button and the INPUT FOLDER containing Supported Image Formats will be Compressed and saved in the OUTPUT FOLDER.
 5.	Click CLEAR Button to reset the input fields and status bar. (If needed)
 
