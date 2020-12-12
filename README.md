@@ -9,9 +9,6 @@
     	<img src="https://img.shields.io/badge/python-v3.8-blue.svg">
     </a>
     <a href="https://github.com/dhhruv/Compresssio-GUI">
-    	<img src="https://badges.pufler.dev/visits/dhhruv/Compresssio-GUI">
-    </a>
-    <a href="https://github.com/dhhruv/Compresssio-GUI">
     	<img src="https://img.shields.io/badge/version-1.1.0-blue">
     </a>
   </p>
