@@ -60,3 +60,10 @@ You can Find your API Key from the Website [https://tinypng.com/developers](http
 -	**This Script is just a Prototype so Metadata is not stored in the Compressed Images from the Original Images.**
 -	**Directory Structure in INPUT and OUTPUT Folders may differ but all Supported Images will be saved according to their directories.**
 -	**The Authors will not be responsible for any kind of loss of data so it is essential to have a Backup of Original Data placed in the Input Folder. Read the [LICENSE](https://github.com/dhhruv/Compresssio-GUI/blob/master/LICENSE) for more information.**
+
+## Contributors:
+
+<a href="https://github.com/dhhruv/Compresssio-GUI/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=dhhruv/Compresssio-GUI" />
+</a>
+
