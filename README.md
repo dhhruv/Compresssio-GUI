@@ -9,7 +9,7 @@
     	<img src="https://img.shields.io/badge/python-v3.8-blue.svg">
     </a>
     <a href="https://github.com/dhhruv/Compresssio-GUI">
-    	<img src="https://img.shields.io/badge/version-1.1.0-blue">
+    	<img src="https://img.shields.io/github/v/release/dhhruv/Compresssio-GUI">
     </a>
   </p>
 </p>
