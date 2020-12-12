@@ -8,6 +8,7 @@
     <a href="https://www.python.org/">
     	<img src="https://img.shields.io/badge/python-v3.8-blue.svg">
     </a>
+    [![HitCount](http://hits.dwyl.com/{username}/{project-name}.svg)](http://hits.dwyl.com/{username}/{project-name})
   </p>
 </p>
 
