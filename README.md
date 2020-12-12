@@ -43,7 +43,7 @@ pip install -r requirements.txt
 
 ## How to Get Your API Key !
 
-You can Find your API Key from the Website [tinypng.com/dashboard/api](https://tinypng.com/developers) after Signing Up and save it somewhere on your PC/Laptop.
+You can Find your API Key from the Website [https://tinypng.com/developers](https://tinypng.com/developers) after Signing Up and save it somewhere on your PC/Laptop.
 
 
 ## How To Use !
@@ -55,7 +55,7 @@ You can Find your API Key from the Website [tinypng.com/dashboard/api](https://t
 
 ## Important Note:
 
--	**The limit you'll have at first is of 500 images per month on the Free plan. You can change this according to your requirement at [tinypng.com/dashboard/api](https://tinypng.com/dashboard/api)**
+-	**The limit you'll have at first is of 500 images per month on the Free plan. You can change this according to your requirement at [https://tinypng.com/developers](https://tinypng.com/developers)**
 -	**Recommended to keep INPUT and OUTPUT Folder different for your ease to differentiate between Optimized and Unoptimized Images.**
 -	**This Script is just a Prototype so Metadata is not stored in the Compressed Images from the Original Images.**
 -	**Directory Structure in INPUT and OUTPUT Folders may differ but all Supported Images will be saved according to their directories.**
