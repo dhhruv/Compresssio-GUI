@@ -8,6 +8,9 @@
     <a href="https://www.python.org/">
     	<img src="https://img.shields.io/badge/python-v3.8-blue.svg">
     </a>
+    <a href="https://github.com/dhhruv/Compresssio-GUI">
+    	<img src="https://badges.pufler.dev/visits/dhhruv/Compresssio-GUI">
+    </a>
   </p>
 </p>
 
