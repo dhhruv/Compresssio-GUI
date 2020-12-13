@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/72680045/100545837-fbb54e80-3283-11eb-92ce-c82ed48f19e9.png">
+  <img src="https://user-images.githubusercontent.com/72680045/102008731-a0da2780-3d58-11eb-8d6d-ad5b232366f5.png">
   <h2 align="center" style="margin-top: -4px !important;">Streamline/Optimize your Images to save storage space...</h2>
   <p align="center">
     <a href="https://github.com/dhhruv/Compresssio/blob/master/LICENSE">
