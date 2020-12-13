@@ -358,6 +358,7 @@ https://github.com/dhhruv
 bundle_dir = getattr(sys, '_MEIPASS', os.path.abspath(os.path.dirname(__file__)))
 path_to_ico = os.path.abspath(os.path.join(bundle_dir, 'compresssio.ico'))
 ROOT = tk.Tk()
+ROOT.resizable(height = False, width = False)
 folder_path_1 = StringVar()
 folder_path_2 = StringVar()
 MAIN_WINDOW = MainWindow(ROOT)
