@@ -38,7 +38,7 @@ class MainWindow:
         try:
             icon_img = tk.Image(
                 "photo",
-                file=self.THIS_FOLDER_G + "/files/compresssio.png"
+                file=self.THIS_FOLDER_G + "compresssio.ico"
             )
             root.call(
                 "wm",
@@ -355,8 +355,11 @@ https://github.com/dhhruv
         self._status.set("---")
 
 
+bundle_dir = getattr(sys, '_MEIPASS', os.path.abspath(os.path.dirname(__file__)))
+path_to_ico = os.path.abspath(os.path.join(bundle_dir, 'compresssio.ico'))
 ROOT = tk.Tk()
 folder_path_1 = StringVar()
 folder_path_2 = StringVar()
 MAIN_WINDOW = MainWindow(ROOT)
+ROOT.iconbitmap(path_to_ico)
 ROOT.mainloop()
