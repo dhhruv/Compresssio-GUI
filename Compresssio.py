@@ -38,7 +38,7 @@ class MainWindow:
         try:
             icon_img = tk.Image(
                 "photo",
-                file=self.THIS_FOLDER_G + "compresssio.ico"
+                file=self.THIS_FOLDER_G + "./files/compresssio.ico"
             )
             root.call(
                 "wm",
@@ -356,7 +356,7 @@ https://github.com/dhhruv
 
 
 bundle_dir = getattr(sys, '_MEIPASS', os.path.abspath(os.path.dirname(__file__)))
-path_to_ico = os.path.abspath(os.path.join(bundle_dir, 'compresssio.ico'))
+path_to_ico = os.path.abspath(os.path.join(bundle_dir, './files/compresssio.ico'))
 ROOT = tk.Tk()
 ROOT.resizable(height = False, width = False)
 folder_path_1 = StringVar()
