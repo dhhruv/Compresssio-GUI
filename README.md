@@ -3,14 +3,16 @@
   <h2 align="center" style="margin-top: -4px !important;">Streamline/Optimize your Images to save storage space...</h2>
   <p align="center">
     <a href="https://github.com/dhhruv/Compresssio/blob/master/LICENSE">
-      <img src="https://img.shields.io/github/license/dhhruv/Compresssio-GUI?color=blue">
+      <img src="https://img.shields.io/github/license/dhhruv/Compresssio-GUI?color=informational">
     </a>
     <a href="https://www.python.org/">
-    	<img src="https://img.shields.io/badge/python-v3.8-blue.svg">
+    	<img src="https://img.shields.io/badge/python-v3.8-informational">
     </a>
+    <img src="https://img.shields.io/badge/maintainer-dhhruv-informational">
     <a href="https://github.com/dhhruv/Compresssio-GUI">
     	<img src="https://img.shields.io/github/v/release/dhhruv/Compresssio-GUI">
     </a>
+    <img src="https://img.shields.io/badge/contributions-welcome-informational">
   </p>
 </p>
 
