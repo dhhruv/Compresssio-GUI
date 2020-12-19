@@ -84,3 +84,6 @@ You can Find your API Key from the Website [https://tinypng.com/developers](http
   <img src="https://contrib.rocks/image?repo=dhhruv/Compresssio-GUI" />
 </a>
 
+## Image Credits:
+- [Unsplash](https://unsplash.com/)
+
