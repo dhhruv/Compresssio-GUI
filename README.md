@@ -26,13 +26,11 @@ The above script uses TinyPNG's savvy lossy compression methods to reduce the do
 	<h4 align="left" style="margin-top: -4px !important;">Image 1:</h4>
 	<img src="https://user-images.githubusercontent.com/72680045/102686740-9c59b700-420f-11eb-9a83-f88b9e060abb.png">
 </p>
-<br>
-<br>
+
 <p align="center">
 	<h4 align="left" style="margin-top: -4px !important;">Image 2:</h4>
 	<img src="https://user-images.githubusercontent.com/72680045/102686743-9d8ae400-420f-11eb-9501-12c42aa4268d.png">
 </p>
-<br>
 
 ## Setup (Windows):
 
