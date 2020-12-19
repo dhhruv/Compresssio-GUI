@@ -24,15 +24,13 @@ The above script uses TinyPNG's savvy lossy compression methods to reduce the do
 
 <p align="center">
 	<h4 align="left" style="margin-top: -4px !important;">Image 1:</h4>
-	<img src="https://user-images.githubusercontent.com/72680045/102686318-e2614b80-420c-11eb-8807-2fce966c52f7.png">
-	<h4 align="center" style="margin-top: -4px !important;">Original Image (Size: 3.29 MB)             Optimized Image (Size: 1.30 MB)</h4>
+	<img src="https://user-images.githubusercontent.com/72680045/102686740-9c59b700-420f-11eb-9a83-f88b9e060abb.png">
 </p>
 <br>
 <br>
 <p align="center">
 	<h4 align="left" style="margin-top: -4px !important;">Image 2:</h4>
-	<img src="https://user-images.githubusercontent.com/72680045/102686321-e42b0f00-420c-11eb-84a0-4fbb2f966b20.png">
-	<h4 align="center" style="margin-top: -4px !important;">Original Image (Size: 3.80 MB)			Optimized Image (Size: 1.21 MB)</h4>
+	<img src="https://user-images.githubusercontent.com/72680045/102686743-9d8ae400-420f-11eb-9501-12c42aa4268d.png">
 </p>
 <br>
 
