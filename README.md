@@ -20,8 +20,16 @@
 
 The above script uses TinyPNG's savvy lossy compression methods to reduce the document size of your JPG/PNG files. This is achieved by specifically decreasing the number of colors in the image, therefore lesser number of bytes are required to store the information. The impact of the script is nearly invisible but it makes an exceptionally enormous effect in file size of the image.
 
+## Image Comparison:
+
 <p align="center">
-	<img src="https://user-images.githubusercontent.com/72680045/102009746-8a839a00-3d5f-11eb-9fee-51cecb6dd061.PNG">
+	<img src="https://user-images.githubusercontent.com/72680045/102686318-e2614b80-420c-11eb-8807-2fce966c52f7.png">
+	Original Image (Size: 3.29 MB)  Optimized Image (Size: 1.30 MB)
+</p>
+<br>
+<p align="center">
+	<img src="https://user-images.githubusercontent.com/72680045/102686321-e42b0f00-420c-11eb-84a0-4fbb2f966b20.png">
+	Original Image (Size: 3.80 MB)  Optimized Image (Size: 1.21 MB)
 </p>
 <br>
 
@@ -45,6 +53,11 @@ venv\Scripts\activate.bat
 ```
 pip install -r requirements.txt
 ```
+
+<p align="center">
+	<img src="https://user-images.githubusercontent.com/72680045/102009746-8a839a00-3d5f-11eb-9fee-51cecb6dd061.PNG">
+</p>
+<br>
 
 ## How to Get Your API Key !
 
