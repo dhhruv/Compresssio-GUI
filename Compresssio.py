@@ -1,6 +1,5 @@
 import os
 import os.path
-from os import path
 import sys
 import tkinter as tk
 from tkinter import filedialog
@@ -39,7 +38,7 @@ class MainWindow:
         try:
             icon_img = tk.Image(
                 "photo",
-                file=self.THIS_FOLDER_G + "/files/compresssio.png"
+                file=self.THIS_FOLDER_G + "./files/compresssio.ico"
             )
             root.call(
                 "wm",
@@ -58,6 +57,10 @@ class MainWindow:
         self.menu_bar.add_command(
             label="Help!",
             command=self.show_help_callback
+        )
+        self.menu_bar.add_command(
+            label="About",
+            command=self.show_about
         )
 
         root.configure(
@@ -299,6 +302,12 @@ class MainWindow:
 NOTE: Recommended to keep INPUT and OUTPUT Folder different for your ease to differentiate between Optimized and Unoptimized Images.
 NOTE: Directory Structure in INPUT and OUTPUT Folders may differ but all Supported Images will be saved according to their directories."""
         )
+    def show_about(self):
+        messagebox.showinfo("Compresssio v1.1.1",
+            """Compresssio is an Image Compressor which uses TinyPNG's lossy compression to compress JPG/JPEG/PNG images. 
+Created and Managed by Dhruv Panchal.
+https://github.com/dhhruv
+            """)
 
     def compress_callback(self):
         t1 = threading.Thread(target=self.compress_execute)
@@ -322,6 +331,7 @@ NOTE: Directory Structure in INPUT and OUTPUT Folders may differ but all Support
                 compress_and_save(image)
             self._status.set("Compression Completed !!")
             self.status_label.update()
+            messagebox.showinfo("Compresssio","Compression Completed !!")
 
         except tinify.AccountError:
             messagebox.showinfo(
@@ -345,8 +355,12 @@ NOTE: Directory Structure in INPUT and OUTPUT Folders may differ but all Support
         self._status.set("---")
 
 
+bundle_dir = getattr(sys, '_MEIPASS', os.path.abspath(os.path.dirname(__file__)))
+path_to_ico = os.path.abspath(os.path.join(bundle_dir, './files/compresssio.ico'))
 ROOT = tk.Tk()
+ROOT.resizable(height = False, width = False)
 folder_path_1 = StringVar()
 folder_path_2 = StringVar()
 MAIN_WINDOW = MainWindow(ROOT)
+ROOT.iconbitmap(path_to_ico)
 ROOT.mainloop()
