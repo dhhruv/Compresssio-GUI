@@ -1,6 +1,7 @@
 import os
 import os.path
 import sys
+import ctypes 
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
@@ -9,6 +10,7 @@ import shutil
 import tinify
 from settings import *
 import threading
+from multiprocessing import Process
 
 
 class MainWindow:
@@ -21,6 +23,10 @@ class MainWindow:
 
     def __init__(self, root):
         self.root = root
+        # When click "X" button on_exit method called.
+        self.root.protocol("WM_DELETE_WINDOW", self.on_exit)
+
+        self.t1 = None
         self._folder_url1 = tk.StringVar()
         self._folder_url2 = tk.StringVar()
         self._api_key = tk.StringVar()
@@ -310,14 +316,17 @@ https://github.com/dhhruv
             """)
 
     def compress_callback(self):
-        t1 = threading.Thread(target=self.compress_execute)
+        t1 = threading.Thread(target=self.compress_execute, name="Compression Thread" daemon = True)
         t1.start()
 
     def compress_execute(self):
         try:
+            self._api_key.set("L8qpGHpH0pKM0dcLLvKv8B8xN1Yf3Q91")
             tinify.key = self._api_key.get()
             tinify.validate()
 
+            self._folder_url1.set("E:/photos")
+            self._folder_url2.set("E:/New Folder")
             if not create_dirs(self._folder_url1.get(), self._folder_url2.get()):
                 return
 
@@ -354,6 +363,8 @@ https://github.com/dhhruv
         self._folder_url2.set("")
         self._status.set("---")
 
+    def on_exit(self):
+        self.root.destroy()
 
 bundle_dir = getattr(sys, '_MEIPASS', os.path.abspath(os.path.dirname(__file__)))
 path_to_ico = os.path.abspath(os.path.join(bundle_dir, './files/compresssio.ico'))
