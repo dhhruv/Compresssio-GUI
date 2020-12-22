@@ -25,9 +25,9 @@ class MainWindow:
     def __init__(self, root):
         self.root = root
 
-        # Thread for compressing the images.
+        # Thread for Compressing the Images.
         self.compress = None
-        # Thread for Stoping the compressing process.
+        # Thread for Stoping the Compressing thread process.
         self.stop = None
         self.stopFlag = False
 
@@ -117,7 +117,7 @@ class MainWindow:
             text="SELECT INPUT FOLDER",
             command=self.selectfolder1_callback,
             width=42,
-            bg="#1089ff",
+            bg="#3498db",
             fg="#ffffff",
             bd=2,
             relief=tk.FLAT
@@ -173,7 +173,7 @@ class MainWindow:
             text="SELECT OUTPUT FOLDER",
             command=self.selectfolder2_callback,
             width=42,
-            bg="#1089ff",
+            bg="#3498db",
             fg="#ffffff",
             bd=2,
             relief=tk.FLAT
@@ -191,7 +191,7 @@ class MainWindow:
 
         self.key_entry_label = tk.Label(
             root,
-            text="Enter API Key:",
+            text="Enter Your API Key:",
             bg="#eeeeee",
             anchor=tk.W
         )
@@ -226,9 +226,9 @@ class MainWindow:
 
         self.compress_btn = tk.Button(
             root,
-            text="COMPRESS",
+            text=" START COMPRESS",
             command=self.compress_callback,
-            bg="#ed3833",
+            bg="#27ae60",
             fg="#ffffff",
             bd=2,
             relief=tk.FLAT
@@ -240,15 +240,36 @@ class MainWindow:
             ipady=6,
             row=8,
             column=0,
-            columnspan=4,
+            columnspan=2,
+            sticky=tk.W+tk.E+tk.N+tk.S
+        )
+
+        self.stop_btn = tk.Button(
+            root,
+            text="STOP",
+            command=self.stop_callback,
+            bg="#aaaaaa",
+            fg="#ffffff",
+            bd=2,
+            state='disabled',
+            relief=tk.FLAT
+        )
+        self.stop_btn.grid(
+            padx=15,
+            pady=8,
+            ipadx=24,
+            ipady=6,
+            row=8,
+            column=2,
+            columnspan=2,
             sticky=tk.W+tk.E+tk.N+tk.S
         )
 
         self.reset_btn = tk.Button(
             root,
-            text="CLEAR",
-            command=self.stop_callback,
-            bg="#aaaaaa",
+            text="CLEAR STATUS",
+            command=self.reset_callback,
+            bg="#717d7e",
             fg="#ffffff",
             bd=2,
             relief=tk.FLAT
@@ -299,6 +320,36 @@ class MainWindow:
         except Exception as e:
             self._status.set(e)
             self.status_label.update()
+    
+    def enable(self):
+
+        self.stop_btn['bg'] = "#aaaaaa"
+        self.stop_btn['state'] = 'disabled'
+        self.compress_btn['state'] = 'normal'
+        self.compress_btn['bg'] = '#27ae60'
+        self.reset_btn['bg'] = "#717d7e"
+        self.reset_btn['state'] = 'normal'
+        self.file_entry1['state'] = 'normal'
+        self.file_entry2['state'] = 'normal'
+        self.select_btn1['state'] = 'normal'
+        self.select_btn2['state'] = 'normal'
+        self.select_btn1['bg'] = '#3498db'
+        self.select_btn2['bg'] = '#3498db'
+
+    def disable(self):
+
+        self.compress_btn['bg'] = "#aaaaaa"
+        self.compress_btn['state'] = 'disabled'
+        self.reset_btn['bg'] = "#aaaaaa"
+        self.reset_btn['state'] = 'disabled'
+        self.stop_btn['bg'] = "#e74c3c"
+        self.stop_btn['state'] = 'normal'
+        self.file_entry1['state'] = 'disabled'
+        self.file_entry2['state'] = 'disabled'
+        self.select_btn1['state'] = 'disabled'
+        self.select_btn2['state'] = 'disabled'
+        self.select_btn1['bg'] = '#aaaaaa'
+        self.select_btn2['bg'] = '#aaaaaa'
 
     def show_help_callback(self):
         messagebox.showinfo(
@@ -313,50 +364,50 @@ NOTE: Recommended to keep INPUT and OUTPUT Folder different for your ease to dif
 NOTE: Directory Structure in INPUT and OUTPUT Folders may differ but all Supported Images will be saved according to their directories."""
         )
     def show_about(self):
-        messagebox.showinfo("Compresssio v1.1.1",
+        messagebox.showinfo("Compresssio v1.2.0",
             """Compresssio is an Image Compressor which uses TinyPNG's lossy compression to compress JPG/JPEG/PNG images. 
-Created and Managed by Dhruv Panchal.
+Created and Managed by Dhruv Panchal & Urvesh Patel.
 https://github.com/dhhruv
             """)
 
     def stop_callback(self):
-        self.stop = threading.Thread(target=self.stop_execute, name="Stoping_Thread", daemon = True)
+        self.stop = threading.Thread(target=self.stop_execute, name="Stopping_Thread", daemon = True)
         self.stop.start()
 
     def stop_execute(self):
-        self.reset_btn['text'] = "Stoping..." # Set button text to stoping.
-        self._status.set("Compression Stoping...")
+        self.stop_btn['text'] = "STOPPING..." # Set button text to stoping.
+        self._status.set("Stopping the Compression. Please Wait...")
         self.status_label.update()
         self.stopFlag = True
 
-        # print(f'Befor :- Active threads : {threading.active_count()}')
+        # print(f'Before :- Active threads : {threading.active_count()}')
         
         while self.stopFlag:
             time.sleep(1)
 
-        self.reset_btn['text'] = "Stop"
-        self.reset_callback()
+        self.stop_btn['text'] = "STOP"
+        self._status.set("Compression Cancelled!!")
+        self.status_label.update()
+        self.enable()
+        messagebox.showinfo("Compresssio","Compression Cancelled!!")
+
         # print(f'After :- Active threads : {threading.active_count()}')
 
     def compress_callback(self):
+        self.disable()
         self.compress = threading.Thread(target=self.compress_execute, name="Compression_Thread", daemon = True)
         self.compress.start()
 
     def compress_execute(self):
         try:
-            # self._api_key.set("L8qpGHpH0pKM0dcLLvKv8B8xN1Yf3Q91")
+
             tinify.key = self._api_key.get()
             tinify.validate()
-
-            # self._folder_url1.set("E:/photos")
-            # self._folder_url2.set("E:/photos")
-            # self._folder_url2.set("E:/New Folder")
-            # self._folder_url1.set("E:/New Folder")
             
             if not create_dirs(self._folder_url1.get(), self._folder_url2.get()):
                 return
 
-            self._status.set("Calculating Images...")
+            self._status.set("Calculating Raw Images...")
             self.status_label.update()
             
             self.raw_images = get_raw_images(self._folder_url1.get())
@@ -364,7 +415,7 @@ https://github.com/dhhruv
             if not self.raw_images:
                 self._status.set("No images found within supported formats!!!")
                 self.status_label.update()
-                messagebox.showinfo("Compresssio","No images found within supported formats!!!")
+                messagebox.showinfo("Compresssio","No images found within supported formats. Please check the INPUT Folder and Try Again!!!")
                 self.reset_callback()
             else:
                 self._status.set("Compression in Progress....")
@@ -376,17 +427,14 @@ https://github.com/dhhruv
                         return
                     
                     only_image_path, image_info = os.path.split(image)
-                    self._status.set(f'Compressing : [{index+1}/{length}] {image_info}')
+                    self._status.set(f'Compressing Image [{index+1}/{length}] : {image_info}')
                     self.status_label.update()
-                    self.status_label.update()
-
-                    change_dir(image, self._folder_url1.get(),
-                               self._folder_url2.get())
- 
+                    change_dir(image, self._folder_url1.get(),self._folder_url2.get())
                     compress_and_save(image)
                 self._status.set("Compression Completed !!")
                 self.status_label.update()
                 self.stopFlag = False
+                self.enable()
                 messagebox.showinfo("Compresssio","Compression Completed !!")
             
         except tinify.AccountError:
@@ -404,6 +452,7 @@ https://github.com/dhhruv
         except Exception as e:
             messagebox.showinfo(
                 "UnknownError", "Something went wrong. Please try again later...")
+        self.enable()
 
     def reset_callback(self):
         self._folder_url1.set("")
