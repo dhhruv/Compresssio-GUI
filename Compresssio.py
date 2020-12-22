@@ -324,7 +324,7 @@ https://github.com/dhhruv
         self.stop.start()
 
     def stop_execute(self):
-        self.reset_btn['text'] = "Stoping..."
+        self.reset_btn['text'] = "Stoping..." # Set button text to stoping.
         self._status.set("Compression Stoping...")
         self.status_label.update()
         self.stopFlag = True
