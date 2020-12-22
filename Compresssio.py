@@ -1,4 +1,5 @@
 import os
+import time
 import os.path
 import sys
 import ctypes 
@@ -23,10 +24,13 @@ class MainWindow:
 
     def __init__(self, root):
         self.root = root
-        # When click "X" button on_exit method called.
-        self.root.protocol("WM_DELETE_WINDOW", self.on_exit)
 
-        self.t1 = None
+        # Thread for compressing the images.
+        self.compress = None
+        # Thread for Stoping the compressing process.
+        self.stop = None
+        self.stopFlag = False
+
         self._folder_url1 = tk.StringVar()
         self._folder_url2 = tk.StringVar()
         self._api_key = tk.StringVar()
@@ -315,33 +319,68 @@ Created and Managed by Dhruv Panchal.
 https://github.com/dhhruv
             """)
 
+    def stop_callback(self):
+        self.stop = threading.Thread(target=self.stop_execute, name="Stoping_Thread", daemon = True)
+        self.stop.start()
+
+    def stop_execute(self):
+        self.reset_btn['text'] = "Stoping..."
+        self._status.set("Compression Stoping...")
+        self.status_label.update()
+        self.stopFlag = True
+
+        # print(f'Befor :- Active threads : {threading.active_count()}')
+        
+        while self.stopFlag:
+            time.sleep(2)
+
+        self.reset_btn['text'] = "Stop"
+        self.reset_callback()
+        # print(f'After :- Active threads : {threading.active_count()}')
+
     def compress_callback(self):
-        t1 = threading.Thread(target=self.compress_execute, name="Compression Thread", daemon = True)
-        t1.start()
+        self.compress = threading.Thread(target=self.compress_execute, name="Compression_Thread", daemon = True)
+        self.compress.start()
 
     def compress_execute(self):
         try:
-            # self._api_key.set("L8qpGHpH0pKM0dcLLvKv8B8xN1Yf3Q91")
+            self._api_key.set("L8qpGHpH0pKM0dcLLvKv8B8xN1Yf3Q91")
             tinify.key = self._api_key.get()
             tinify.validate()
 
             # self._folder_url1.set("E:/photos")
+            # self._folder_url1.set("E:/New Folder")
             # self._folder_url2.set("E:/New Folder")
+            
             if not create_dirs(self._folder_url1.get(), self._folder_url2.get()):
                 return
 
-            self._status.set("Compression in Progress....")
+            self._status.set("Calculating Images...")
             self.status_label.update()
-
+            
             self.raw_images = get_raw_images(self._folder_url1.get())
-            for image in self.raw_images:
-                change_dir(image, self._folder_url1.get(),
-                           self._folder_url2.get())
-                compress_and_save(image)
-            self._status.set("Compression Completed !!")
-            self.status_label.update()
-            messagebox.showinfo("Compresssio","Compression Completed !!")
+            # print(f'lenght of raw images : {len(self.raw_images)}')
 
+            if not self.raw_images:
+                self._status.set("No images found within supported formats!!!")
+                self.status_label.update()
+                messagebox.showinfo("Compresssio","No images found within supported formats!!!")
+                self.reset_callback()
+            else:
+                self._status.set("Compression in Progress....")
+                self.status_label.update()
+                for image in self.raw_images:
+                    if self.stopFlag:
+                        self.stopFlag = False
+                        return
+                    change_dir(image, self._folder_url1.get(),
+                               self._folder_url2.get())
+                    compress_and_save(image)
+                self._status.set("Compression Completed !!")
+                self.status_label.update()
+                self.stopFlag = False
+                messagebox.showinfo("Compresssio","Compression Completed !!")
+            
         except tinify.AccountError:
             messagebox.showinfo(
                 "AccountError", "Please verify your Tinify API key and account limit...")
@@ -355,6 +394,7 @@ https://github.com/dhhruv
             messagebox.showinfo("ConnectionError", """A network connection error occurred. 
             	Please check your Internet Connection and Try again...""")
         except Exception as e:
+            # print(e)
             messagebox.showinfo(
                 "UnknownError", "Something went wrong. Please try again later...")
 
@@ -362,9 +402,7 @@ https://github.com/dhhruv
         self._folder_url1.set("")
         self._folder_url2.set("")
         self._status.set("---")
-
-    def on_exit(self):
-        self.root.destroy()
+        self.stopFlag = False
 
 bundle_dir = getattr(sys, '_MEIPASS', os.path.abspath(os.path.dirname(__file__)))
 path_to_ico = os.path.abspath(os.path.join(bundle_dir, './files/compresssio.ico'))
