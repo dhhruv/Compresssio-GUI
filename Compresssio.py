@@ -316,7 +316,7 @@ https://github.com/dhhruv
             """)
 
     def compress_callback(self):
-        t1 = threading.Thread(target=self.compress_execute, name="Compression Thread" daemon = True)
+        t1 = threading.Thread(target=self.compress_execute, name="Compression Thread", daemon = True)
         t1.start()
 
     def compress_execute(self):
