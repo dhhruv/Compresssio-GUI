@@ -1,6 +1,8 @@
 import os
+import time
 import os.path
 import sys
+import ctypes 
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
@@ -9,8 +11,7 @@ import shutil
 import tinify
 from settings import *
 import threading
-from tinify import client
-from tinify import errors
+from multiprocessing import Process
 
 
 class MainWindow:
@@ -23,6 +24,13 @@ class MainWindow:
 
     def __init__(self, root):
         self.root = root
+
+        # Thread for compressing the images.
+        self.compress = None
+        # Thread for Stoping the compressing process.
+        self.stop = None
+        self.stopFlag = False
+
         self._folder_url1 = tk.StringVar()
         self._folder_url2 = tk.StringVar()
         self._api_key = tk.StringVar()
@@ -239,7 +247,7 @@ class MainWindow:
         self.reset_btn = tk.Button(
             root,
             text="CLEAR",
-            command=self.reset_callback,
+            command=self.stop_callback,
             bg="#aaaaaa",
             fg="#ffffff",
             bd=2,
@@ -250,7 +258,7 @@ class MainWindow:
             pady=(4, 12),
             ipadx=24,
             ipady=6,
-            row=10,
+            row=9,
             column=0,
             columnspan=4,
             sticky=tk.W+tk.E+tk.N+tk.S
@@ -270,27 +278,7 @@ class MainWindow:
             pady=(0, 12),
             ipadx=0,
             ipady=1,
-            row=11,
-            column=0,
-            columnspan=4,
-            sticky=tk.W+tk.E+tk.N+tk.S
-        )
-
-        self.stop_btn = tk.Button(
-            root,
-            text="STOP",
-            command=self.stop_callback,
-            bg="#ed3833",
-            fg="#ffffff",
-            bd=2,
-            relief=tk.FLAT
-        )
-        self.stop_btn.grid(
-            padx=15,
-            pady=8,
-            ipadx=24,
-            ipady=6,
-            row=9,
+            row=10,
             column=0,
             columnspan=4,
             sticky=tk.W+tk.E+tk.N+tk.S
@@ -312,15 +300,6 @@ class MainWindow:
             self._status.set(e)
             self.status_label.update()
 
-    def stop_callback(self):
-        self._status.set("Compression Stopped!")
-        self.status_label.update()    	
-        with tinify.Client(self._api_key.get()) as cli:
-        	cli.close() 
-        	cli.__exit__()
-        raise ValueError('A very specific bad thing happened.')
-
-
     def show_help_callback(self):
         messagebox.showinfo(
             "Help!",
@@ -340,31 +319,76 @@ Created and Managed by Dhruv Panchal.
 https://github.com/dhhruv
             """)
 
+    def stop_callback(self):
+        self.stop = threading.Thread(target=self.stop_execute, name="Stoping_Thread", daemon = True)
+        self.stop.start()
+
+    def stop_execute(self):
+        self.reset_btn['text'] = "Stoping..." # Set button text to stoping.
+        self._status.set("Compression Stoping...")
+        self.status_label.update()
+        self.stopFlag = True
+
+        # print(f'Befor :- Active threads : {threading.active_count()}')
+        
+        while self.stopFlag:
+            time.sleep(1)
+
+        self.reset_btn['text'] = "Stop"
+        self.reset_callback()
+        # print(f'After :- Active threads : {threading.active_count()}')
+
     def compress_callback(self):
-        t1 = threading.Thread(target=self.compress_execute)
-        t1.start()
+        self.compress = threading.Thread(target=self.compress_execute, name="Compression_Thread", daemon = True)
+        self.compress.start()
 
     def compress_execute(self):
         try:
+            # self._api_key.set("L8qpGHpH0pKM0dcLLvKv8B8xN1Yf3Q91")
             tinify.key = self._api_key.get()
             tinify.validate()
 
+            # self._folder_url1.set("E:/photos")
+            # self._folder_url2.set("E:/photos")
+            # self._folder_url2.set("E:/New Folder")
+            # self._folder_url1.set("E:/New Folder")
+            
             if not create_dirs(self._folder_url1.get(), self._folder_url2.get()):
                 return
 
-            self._status.set("Compression in Progress....")
+            self._status.set("Calculating Images...")
             self.status_label.update()
-
+            
             self.raw_images = get_raw_images(self._folder_url1.get())
-            print(self.raw_images.get())
-            for image in self.raw_images:
-                change_dir(image, self._folder_url1.get(),
-                           self._folder_url2.get())
-                compress_and_save(image)
-            self._status.set("Compression Completed !!")
-            self.status_label.update()
-            messagebox.showinfo("Compresssio","Compression Completed !!")
 
+            if not self.raw_images:
+                self._status.set("No images found within supported formats!!!")
+                self.status_label.update()
+                messagebox.showinfo("Compresssio","No images found within supported formats!!!")
+                self.reset_callback()
+            else:
+                self._status.set("Compression in Progress....")
+                self.status_label.update()
+                length = len(self.raw_images)
+                for index,image in enumerate(self.raw_images):
+                    if self.stopFlag:
+                        self.stopFlag = False
+                        return
+                    
+                    only_image_path, image_info = os.path.split(image)
+                    self._status.set(f'Compressing : [{index+1}/{length}] {image_info}')
+                    self.status_label.update()
+                    self.status_label.update()
+
+                    change_dir(image, self._folder_url1.get(),
+                               self._folder_url2.get())
+ 
+                    compress_and_save(image)
+                self._status.set("Compression Completed !!")
+                self.status_label.update()
+                self.stopFlag = False
+                messagebox.showinfo("Compresssio","Compression Completed !!")
+            
         except tinify.AccountError:
             messagebox.showinfo(
                 "AccountError", "Please verify your Tinify API key and account limit...")
@@ -380,13 +404,12 @@ https://github.com/dhhruv
         except Exception as e:
             messagebox.showinfo(
                 "UnknownError", "Something went wrong. Please try again later...")
-        self.reset_callback()
 
     def reset_callback(self):
         self._folder_url1.set("")
         self._folder_url2.set("")
         self._status.set("---")
-
+        self.stopFlag = False
 
 bundle_dir = getattr(sys, '_MEIPASS', os.path.abspath(os.path.dirname(__file__)))
 path_to_ico = os.path.abspath(os.path.join(bundle_dir, './files/compresssio.ico'))
