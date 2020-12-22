@@ -364,7 +364,7 @@ NOTE: Recommended to keep INPUT and OUTPUT Folder different for your ease to dif
 NOTE: Directory Structure in INPUT and OUTPUT Folders may differ but all Supported Images will be saved according to their directories."""
         )
     def show_about(self):
-        messagebox.showinfo("Compresssio v1.2.0",
+        messagebox.showinfo("Compresssio v2.0.0",
             """Compresssio is an Image Compressor which uses TinyPNG's lossy compression to compress JPG/JPEG/PNG images. 
 Created and Managed by Dhruv Panchal & Urvesh Patel.
 https://github.com/dhhruv
