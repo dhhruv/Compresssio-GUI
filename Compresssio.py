@@ -247,7 +247,7 @@ class MainWindow:
         self.reset_btn = tk.Button(
             root,
             text="CLEAR",
-            command=self.reset_callback,
+            command=self.stop_callback,
             bg="#aaaaaa",
             fg="#ffffff",
             bd=2,
@@ -332,7 +332,7 @@ https://github.com/dhhruv
         # print(f'Befor :- Active threads : {threading.active_count()}')
         
         while self.stopFlag:
-            time.sleep(2)
+            time.sleep(1)
 
         self.reset_btn['text'] = "Stop"
         self.reset_callback()
@@ -344,13 +344,14 @@ https://github.com/dhhruv
 
     def compress_execute(self):
         try:
-            self._api_key.set("L8qpGHpH0pKM0dcLLvKv8B8xN1Yf3Q91")
+            # self._api_key.set("L8qpGHpH0pKM0dcLLvKv8B8xN1Yf3Q91")
             tinify.key = self._api_key.get()
             tinify.validate()
 
             # self._folder_url1.set("E:/photos")
-            # self._folder_url1.set("E:/New Folder")
+            # self._folder_url2.set("E:/photos")
             # self._folder_url2.set("E:/New Folder")
+            # self._folder_url1.set("E:/New Folder")
             
             if not create_dirs(self._folder_url1.get(), self._folder_url2.get()):
                 return
@@ -359,7 +360,6 @@ https://github.com/dhhruv
             self.status_label.update()
             
             self.raw_images = get_raw_images(self._folder_url1.get())
-            # print(f'lenght of raw images : {len(self.raw_images)}')
 
             if not self.raw_images:
                 self._status.set("No images found within supported formats!!!")
@@ -369,12 +369,20 @@ https://github.com/dhhruv
             else:
                 self._status.set("Compression in Progress....")
                 self.status_label.update()
-                for image in self.raw_images:
+                length = len(self.raw_images)
+                for index,image in enumerate(self.raw_images):
                     if self.stopFlag:
                         self.stopFlag = False
                         return
+                    
+                    only_image_path, image_info = os.path.split(image)
+                    self._status.set(f'Compressing : [{index+1}/{length}] {image_info}')
+                    self.status_label.update()
+                    self.status_label.update()
+
                     change_dir(image, self._folder_url1.get(),
                                self._folder_url2.get())
+ 
                     compress_and_save(image)
                 self._status.set("Compression Completed !!")
                 self.status_label.update()
@@ -394,7 +402,6 @@ https://github.com/dhhruv
             messagebox.showinfo("ConnectionError", """A network connection error occurred. 
             	Please check your Internet Connection and Try again...""")
         except Exception as e:
-            # print(e)
             messagebox.showinfo(
                 "UnknownError", "Something went wrong. Please try again later...")
 

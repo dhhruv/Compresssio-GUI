@@ -63,8 +63,10 @@ def change_dir(abs_image_path,raw_images_dir,save_dir):
 def compress_and_save(abs_image_path):
 
     only_image_path, image_info = os.path.split(abs_image_path)
-    image_name, image_type = image_info.split('.')
-  
+
+    index = image_info.rindex('.')
+    image_name, image_type = image_info[:index], image_info[index+1:]
+
     optimized_filename = f'{image_name}_optimized.{image_type}'
     if not os.path.isfile(optimized_filename):
         source = tinify.from_file(abs_image_path)
