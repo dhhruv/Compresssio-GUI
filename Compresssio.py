@@ -321,12 +321,12 @@ https://github.com/dhhruv
 
     def compress_execute(self):
         try:
-            self._api_key.set("L8qpGHpH0pKM0dcLLvKv8B8xN1Yf3Q91")
+            # self._api_key.set("L8qpGHpH0pKM0dcLLvKv8B8xN1Yf3Q91")
             tinify.key = self._api_key.get()
             tinify.validate()
 
-            self._folder_url1.set("E:/photos")
-            self._folder_url2.set("E:/New Folder")
+            # self._folder_url1.set("E:/photos")
+            # self._folder_url2.set("E:/New Folder")
             if not create_dirs(self._folder_url1.get(), self._folder_url2.get()):
                 return
 
