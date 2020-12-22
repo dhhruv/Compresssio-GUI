@@ -9,6 +9,8 @@ import shutil
 import tinify
 from settings import *
 import threading
+from tinify import client
+from tinify import errors
 
 
 class MainWindow:
@@ -248,7 +250,7 @@ class MainWindow:
             pady=(4, 12),
             ipadx=24,
             ipady=6,
-            row=9,
+            row=10,
             column=0,
             columnspan=4,
             sticky=tk.W+tk.E+tk.N+tk.S
@@ -268,7 +270,27 @@ class MainWindow:
             pady=(0, 12),
             ipadx=0,
             ipady=1,
-            row=10,
+            row=11,
+            column=0,
+            columnspan=4,
+            sticky=tk.W+tk.E+tk.N+tk.S
+        )
+
+        self.stop_btn = tk.Button(
+            root,
+            text="STOP",
+            command=self.stop_callback,
+            bg="#ed3833",
+            fg="#ffffff",
+            bd=2,
+            relief=tk.FLAT
+        )
+        self.stop_btn.grid(
+            padx=15,
+            pady=8,
+            ipadx=24,
+            ipady=6,
+            row=9,
             column=0,
             columnspan=4,
             sticky=tk.W+tk.E+tk.N+tk.S
@@ -289,6 +311,15 @@ class MainWindow:
         except Exception as e:
             self._status.set(e)
             self.status_label.update()
+
+    def stop_callback(self):
+        self._status.set("Compression Stopped!")
+        self.status_label.update()    	
+        with tinify.Client(self._api_key.get()) as cli:
+        	cli.close() 
+        	cli.__exit__()
+        raise ValueError('A very specific bad thing happened.')
+
 
     def show_help_callback(self):
         messagebox.showinfo(
@@ -325,6 +356,7 @@ https://github.com/dhhruv
             self.status_label.update()
 
             self.raw_images = get_raw_images(self._folder_url1.get())
+            print(self.raw_images.get())
             for image in self.raw_images:
                 change_dir(image, self._folder_url1.get(),
                            self._folder_url2.get())
@@ -348,6 +380,7 @@ https://github.com/dhhruv
         except Exception as e:
             messagebox.showinfo(
                 "UnknownError", "Something went wrong. Please try again later...")
+        self.reset_callback()
 
     def reset_callback(self):
         self._folder_url1.set("")
