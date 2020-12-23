@@ -39,14 +39,6 @@ def get_raw_images(raw_images_dir):
                     filepath = os.path.join(root, filename)
                     raw_images.append(filepath)
 
-    # if not raw_images:
-    #     print('images are not in directories.')
-    #     try:
-    #         raise OSError('No images found within supported formats!!!')
-    #     except OSError:
-    #         dir_name = os.path.basename(raw_images_dir)
-    #         sys.exit(0)
-
     return raw_images
 
 def change_dir(abs_image_path,raw_images_dir,save_dir):

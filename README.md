@@ -54,7 +54,7 @@ pip install -r requirements.txt
 ```
 
 <p align="center">
-	<img src="https://user-images.githubusercontent.com/72680045/102009746-8a839a00-3d5f-11eb-9fee-51cecb6dd061.PNG">
+	<img src="https://user-images.githubusercontent.com/72680045/102932031-8d039380-44c5-11eb-8640-3c0dd9e2ae23.PNG">
 </p>
 <br>
 
