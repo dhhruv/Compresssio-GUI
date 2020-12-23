@@ -2,7 +2,6 @@ import os
 import time
 import os.path
 import sys
-import ctypes 
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
@@ -11,8 +10,6 @@ import shutil
 import tinify
 from settings import *
 import threading
-from multiprocessing import Process
-
 
 class MainWindow:
 
