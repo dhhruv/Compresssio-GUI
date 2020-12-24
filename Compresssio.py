@@ -2,7 +2,6 @@ import os
 import time
 import os.path
 import sys
-import ctypes 
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
@@ -11,8 +10,6 @@ import shutil
 import tinify
 from settings import *
 import threading
-from multiprocessing import Process
-
 
 class MainWindow:
 
@@ -371,16 +368,15 @@ https://github.com/dhhruv
             """)
 
     def stop_callback(self):
-        self.stop = threading.Thread(target=self.stop_execute, name="Stopping_Thread", daemon = True)
-        self.stop.start()
+        if not self.stopFlag:
+            self.stopFlag = True 
+            self.stop = threading.Thread(target=self.stop_execute, name="Stopping_Thread", daemon = True)
+            self.stop.start()
 
     def stop_execute(self):
         self.stop_btn['text'] = "STOPPING..." # Set button text to stoping.
         self._status.set("Stopping the Compression. Please Wait...")
         self.status_label.update()
-        self.stopFlag = True
-
-        # print(f'Before :- Active threads : {threading.active_count()}')
         
         while self.stopFlag:
             time.sleep(1)
@@ -390,8 +386,6 @@ https://github.com/dhhruv
         self.status_label.update()
         self.enable()
         messagebox.showinfo("Compresssio","Compression Cancelled!!")
-
-        # print(f'After :- Active threads : {threading.active_count()}')
 
     def compress_callback(self):
         self.disable()
