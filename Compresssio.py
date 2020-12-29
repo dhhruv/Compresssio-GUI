@@ -362,7 +362,7 @@ NOTE: Directory Structure in INPUT and OUTPUT Folders may differ but all Support
         )
     def show_about(self):
         messagebox.showinfo("Compresssio v2.0.0",
-            """Compresssio is an Image Compressing Tool which uses TinyPNG's lossy compression to compress JPG/JPEG/PNG images. 
+            """Compresssio is an Image Compression Tool which uses TinyPNG's lossy compression to compress JPG/JPEG/PNG images. 
 Created and Managed by Dhruv Panchal & Urvesh Patel.
 https://github.com/dhhruv
             """)
