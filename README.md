@@ -8,11 +8,10 @@
     <a href="https://www.python.org/">
     	<img src="https://img.shields.io/badge/python-v3.8-informational">
     </a>
-    <img src="https://img.shields.io/badge/maintainer-dhhruv-informational">
     <a href="https://github.com/dhhruv/Compresssio-GUI">
     	<img src="https://img.shields.io/github/v/release/dhhruv/Compresssio-GUI">
     </a>
-    <img src="https://img.shields.io/badge/contributions-welcome-informational">
+    <img src="https://img.shields.io/github/downloads/dhhruv/Compresssio-GUI/total?color=important">
   </p>
 </p>
 
