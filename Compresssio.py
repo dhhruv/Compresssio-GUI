@@ -13,7 +13,6 @@ import tinify
 from settings import *
 import threading
 
-
 class MainWindow:
 
     THIS_FOLDER_G = ''
@@ -64,8 +63,8 @@ class MainWindow:
         root.configure(menu=self.menu_bar)
 
         self.file_entry_label1 = tk.Label(root,
-                text='Enter Input Folder Path:', bg='#eeeeee',
-                anchor=tk.W)
+                                          text='Enter Input Folder Path:', bg='#eeeeee',
+                                          anchor=tk.W)
         self.file_entry_label1.grid(
             padx=12,
             pady=(8, 0),
@@ -75,7 +74,7 @@ class MainWindow:
             column=0,
             columnspan=4,
             sticky=tk.W + tk.E + tk.N + tk.S,
-            )
+        )
 
         self.file_entry1 = tk.Entry(root,
                                     textvariable=self._folder_url1,
@@ -90,7 +89,7 @@ class MainWindow:
             column=0,
             columnspan=4,
             sticky=tk.W + tk.E + tk.N + tk.S,
-            )
+        )
 
         self.select_btn1 = tk.Button(
             root,
@@ -101,7 +100,7 @@ class MainWindow:
             fg='#ffffff',
             bd=2,
             relief=tk.FLAT,
-            )
+        )
         self.select_btn1.grid(
             padx=15,
             pady=8,
@@ -111,11 +110,11 @@ class MainWindow:
             column=0,
             columnspan=4,
             sticky=tk.W + tk.E + tk.N + tk.S,
-            )
+        )
 
         self.file_entry_label2 = tk.Label(root,
-                text='Enter Output Folder Path:', bg='#eeeeee',
-                anchor=tk.W)
+                                          text='Enter Output Folder Path:', bg='#eeeeee',
+                                          anchor=tk.W)
         self.file_entry_label2.grid(
             padx=12,
             pady=(8, 0),
@@ -125,7 +124,7 @@ class MainWindow:
             column=0,
             columnspan=4,
             sticky=tk.W + tk.E + tk.N + tk.S,
-            )
+        )
 
         self.file_entry2 = tk.Entry(root,
                                     textvariable=self._folder_url2,
@@ -140,7 +139,7 @@ class MainWindow:
             column=0,
             columnspan=4,
             sticky=tk.W + tk.E + tk.N + tk.S,
-            )
+        )
 
         self.select_btn2 = tk.Button(
             root,
@@ -151,7 +150,7 @@ class MainWindow:
             fg='#ffffff',
             bd=2,
             relief=tk.FLAT,
-            )
+        )
         self.select_btn2.grid(
             padx=15,
             pady=8,
@@ -161,10 +160,10 @@ class MainWindow:
             column=0,
             columnspan=4,
             sticky=tk.W + tk.E + tk.N + tk.S,
-            )
+        )
 
-        self.key_entry_label = tk.Label(root, text='Enter Your API Key:'
-                , bg='#eeeeee', anchor=tk.W)
+        self.key_entry_label = tk.Label(
+            root, text='Enter Your API Key:', bg='#eeeeee', anchor=tk.W)
         self.key_entry_label.grid(
             padx=12,
             pady=(8, 0),
@@ -174,7 +173,7 @@ class MainWindow:
             column=0,
             columnspan=4,
             sticky=tk.W + tk.E + tk.N + tk.S,
-            )
+        )
 
         self.key_entry = tk.Entry(root, textvariable=self._api_key,
                                   bg='#fff', exportselection=0,
@@ -188,7 +187,7 @@ class MainWindow:
             column=0,
             columnspan=4,
             sticky=tk.W + tk.E + tk.N + tk.S,
-            )
+        )
 
         self.compress_btn = tk.Button(
             root,
@@ -198,7 +197,7 @@ class MainWindow:
             fg='#ffffff',
             bd=2,
             relief=tk.FLAT,
-            )
+        )
         self.compress_btn.grid(
             padx=15,
             pady=8,
@@ -208,7 +207,7 @@ class MainWindow:
             column=0,
             columnspan=2,
             sticky=tk.W + tk.E + tk.N + tk.S,
-            )
+        )
 
         self.stop_btn = tk.Button(
             root,
@@ -219,7 +218,7 @@ class MainWindow:
             bd=2,
             state='disabled',
             relief=tk.FLAT,
-            )
+        )
         self.stop_btn.grid(
             padx=15,
             pady=8,
@@ -229,7 +228,7 @@ class MainWindow:
             column=2,
             columnspan=2,
             sticky=tk.W + tk.E + tk.N + tk.S,
-            )
+        )
 
         self.reset_btn = tk.Button(
             root,
@@ -239,7 +238,7 @@ class MainWindow:
             fg='#ffffff',
             bd=2,
             relief=tk.FLAT,
-            )
+        )
         self.reset_btn.grid(
             padx=15,
             pady=(4, 12),
@@ -249,7 +248,7 @@ class MainWindow:
             column=0,
             columnspan=4,
             sticky=tk.W + tk.E + tk.N + tk.S,
-            )
+        )
 
         self.status_label = tk.Label(
             root,
@@ -259,7 +258,7 @@ class MainWindow:
             justify=tk.LEFT,
             relief=tk.FLAT,
             wraplength=350,
-            )
+        )
         self.status_label.grid(
             padx=12,
             pady=(0, 12),
@@ -269,7 +268,7 @@ class MainWindow:
             column=0,
             columnspan=4,
             sticky=tk.W + tk.E + tk.N + tk.S,
-            )
+        )
 
     def selectfolder1_callback(self):
         try:
@@ -339,7 +338,7 @@ https://github.com/dhhruv
         if not self.stopFlag:
             self.stopFlag = True
             self.stop = threading.Thread(target=self.stop_execute,
-                    name='Stopping_Thread', daemon=True)
+                                         name='Stopping_Thread', daemon=True)
             self.stop.start()
 
     def stop_execute(self):
@@ -359,7 +358,7 @@ https://github.com/dhhruv
     def compress_callback(self):
         self.disable()
         self.compress = threading.Thread(target=self.compress_execute,
-                name='Compression_Thread', daemon=True)
+                                         name='Compression_Thread', daemon=True)
         self.compress.start()
 
     def compress_execute(self):
@@ -368,39 +367,36 @@ https://github.com/dhhruv
             tinify.key = self._api_key.get()
             tinify.validate()
 
-            if not create_dirs(self._folder_url1.get(),
-                               self._folder_url2.get()):
-                return
-
             self._status.set('Calculating Raw Images...')
             self.status_label.update()
 
             self.raw_images = get_raw_images(self._folder_url1.get())
-
             if not self.raw_images:
-                self._status.set('No images found within supported formats!!!'
-                                 )
+                self._status.set('No images found within supported formats!!!')
                 self.status_label.update()
                 messagebox.showinfo('Compresssio',
                                     'No images found within supported formats. Please check the INPUT Folder and Try Again!!!'
                                     )
                 self.reset_callback()
             else:
+                create_dirs(self.raw_images,self._folder_url2.get())
+
                 self._status.set('Compression in Progress....')
                 self.status_label.update()
                 length = len(self.raw_images)
+                
                 for (index, image) in enumerate(self.raw_images):
                     if self.stopFlag:
                         self.stopFlag = False
                         return
 
                     (only_image_path, image_info) = os.path.split(image)
-                    self._status.set('Compressing Image [{}/{}] : {}'.format(index
-                            + 1, length, image_info))
+                    self._status.set(
+                        'Compressing Image [{}/{}] : {}'.format(index + 1, length, image_info))
                     self.status_label.update()
                     change_dir(image, self._folder_url1.get(),
                                self._folder_url2.get())
-                    compress_and_save(image)
+                    compress_and_save(self._folder_url1.get()+"/"+image)
                 self._status.set('Compression Completed !!')
                 self.status_label.update()
                 self.stopFlag = False
@@ -441,7 +437,7 @@ https://github.com/dhhruv
 bundle_dir = getattr(sys, '_MEIPASS',
                      os.path.abspath(os.path.dirname(__file__)))
 path_to_ico = os.path.abspath(os.path.join(bundle_dir,
-                              './files/compresssio.ico'))
+                                           './files/compresssio.ico'))
 ROOT = tk.Tk()
 ROOT.resizable(height=False, width=False)
 folder_path_1 = StringVar()
